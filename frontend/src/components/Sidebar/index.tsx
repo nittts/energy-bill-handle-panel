@@ -3,6 +3,7 @@ import { Flex, Layout, Typography, theme } from "antd";
 import SidebarMenu from "./Sidebar.menu";
 import SidebarSettingsButton from "./Sidebar.settingsButton";
 import { MdEnergySavingsLeaf } from "react-icons/md";
+import SelectClient from "../Select/Select.client";
 
 const { Sider } = Layout;
 const { Title } = Typography;
@@ -14,7 +15,10 @@ function Sidebar() {
     <Sider
       breakpoint="lg"
       collapsedWidth="0"
-      style={{ minHeight: "100vh", background: token.colorBgContainer }}
+      style={{
+        minHeight: "100vh",
+        background: token.colorBgContainer,
+      }}
       zeroWidthTriggerStyle={{ background: token.colorPrimary }}
     >
       <Flex vertical align="center" gap={6} style={{ background: token.colorPrimary, paddingTop: 3, paddingBottom: 3 }}>
@@ -23,6 +27,7 @@ function Sidebar() {
           Energy Gen.
         </Title>
         <SidebarSettingsButton />
+        <SelectClient />
       </Flex>
       <SidebarMenu />
     </Sider>

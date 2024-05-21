@@ -11,7 +11,12 @@ function ExtractBillDrawer() {
 
   return (
     <>
-      <Drawer open={open} onClose={handleOpen} style={{ minHeight: "100vh", background: token.colorBgContainer }}>
+      <Drawer
+        title="Enviar Fatura(s)"
+        open={open}
+        onClose={handleOpen}
+        style={{ minHeight: "100vh", background: token.colorBgContainer }}
+      >
         <ExtractBillForm />
       </Drawer>
       <FloatButton
