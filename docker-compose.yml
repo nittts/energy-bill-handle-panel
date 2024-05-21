@@ -1,0 +1,48 @@
+services:
+  frontend:
+    container_name: energy_bill_web
+    build: ./frontend
+    depends_on:
+      - api
+    links:
+      - api
+    ports:
+      - 5555:5555
+    networks:
+      - network-energy-bill-panel
+
+  postgres:
+    container_name: energy_bill_database
+    image: postgres:latest
+    hostname: postgres
+    ports:
+      - 5433:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=energy
+    networks:
+      - network-energy-bill-panel
+    volumes:
+      - ./pgData:/var/lib/psotgresql/data
+
+  api:
+    build: ./backend
+    container_name: energy_bill_api
+    links:
+      - postgres
+    depends_on:
+      - postgres
+    ports:
+      - 8080:8080
+    env_file:
+      - ./backend/docker.env
+    networks:
+      - network-energy-bill-panel
+    restart: always
+
+networks:
+  network-energy-bill-panel:
+
+volumes:
+  postgres_data:
