@@ -1,5 +1,5 @@
 import { SettingOutlined } from "@ant-design/icons";
-import { Button, Flex, Popover } from "antd";
+import { Button, Flex, Popover, theme } from "antd";
 import { useState } from "react";
 import SelectAccent from "../Select/Select.accent";
 import SelectUIMode from "../Select/Select.UIMode";
@@ -16,6 +16,7 @@ const content = () => {
 };
 
 function SidebarSettingsButton() {
+  const { token } = theme.useToken();
   const [open, setOpen] = useState(false);
 
   const handleShowPopover = () => {
@@ -28,7 +29,7 @@ function SidebarSettingsButton() {
         <Button
           onClick={handleShowPopover}
           type="primary"
-          icon={<SettingOutlined style={{ fontSize: "1.5em" }} />}
+          icon={<SettingOutlined style={{ fontSize: "1.5em", color: token.colorText }} />}
           key="dropdown-side-settings"
         />
       </Popover>

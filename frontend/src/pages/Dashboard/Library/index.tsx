@@ -1,8 +1,7 @@
-import { ReactElement, useState } from "react";
-import { Flex, Segmented } from "antd";
+import { Key, ReactElement, useState } from "react";
+import { Button, Flex, Segmented } from "antd";
 import { MdGridView, MdList } from "react-icons/md";
 
-import ExportBills from "./elements/ExportBillsContainer.element";
 import GridBillsContainer from "./elements/GridBillsContainer.element";
 import TableContainer from "./elements/TableContainer.element";
 
@@ -20,18 +19,26 @@ const options: IOptions[] = [
 ];
 
 function Library() {
+  const [selected, setSelected] = useState<Key[]>([]);
   const [view, setView] = useState<IViews>("TABLE");
 
   const onViewChange = (value: IViews) => setView(value);
+
+  const onSelect = (keys: Key[]) => {
+    setSelected(keys);
+  };
 
   return (
     <>
       <Flex justify="flex-end" align="center" gap={10}>
         <Segmented<IViews> size="large" options={options} onChange={onViewChange} />
-        <ExportBills />
+        <Button type="primary" disabled={!selected.length}>
+          Exportar Faturas
+        </Button>
       </Flex>
-      {view === "TABLE" && <TableContainer />}
-      {view === "GRID" && <GridBillsContainer />}
+
+      {view === "TABLE" && <TableContainer onSelect={onSelect} selected={selected} />}
+      {view === "GRID" && <GridBillsContainer onSelect={onSelect} selected={selected} />}
     </>
   );
 }

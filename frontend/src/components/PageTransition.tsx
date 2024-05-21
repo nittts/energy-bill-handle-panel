@@ -4,6 +4,7 @@ import { ReactNode, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useLocation } from "react-router-dom";
 import LoadingOverlay from "./LoadingOverlay";
+import FadeIn from "./Animations/Animations.FadeIn";
 
 type PageTransitionProps = {
   children: ReactNode;
@@ -90,9 +91,7 @@ function PageTransition({ children, hideTransition }: PageTransitionProps) {
         />
       )}
       {!loaded && <LoadingOverlay />}
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} key="children">
-        {children}
-      </motion.div>
+      <FadeIn key="children">{children}</FadeIn>
     </AnimatePresence>
   );
 }
