@@ -1,11 +1,12 @@
-import { Flex } from "antd";
+import GraphsContainer from "./elements/GraphsContainer.element";
+import LastBillsContainer from "./elements/LastBillsContainer.element";
 
-const containerStyles = { margin: "2vh 1vw 1vw 48px" };
 function Management() {
   return (
-    <Flex style={containerStyles} gap="middle" vertical>
-      Management
-    </Flex>
+    <>
+      <GraphsContainer />
+      <LastBillsContainer />
+    </>
   );
 }
 

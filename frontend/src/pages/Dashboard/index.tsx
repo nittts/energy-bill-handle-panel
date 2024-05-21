@@ -1,9 +1,12 @@
+import ExtractBillDrawer from "@/components/ExtractBillDrawer";
 import Sidebar from "@/components/Sidebar";
 
-import { Layout } from "antd";
+import { Flex, Layout } from "antd";
 import { Outlet } from "react-router-dom";
 
 const { Content } = Layout;
+
+const containerStyles = { margin: "2vh 1vw 1vw 48px" };
 
 function Dashboard() {
   return (
@@ -11,9 +14,12 @@ function Dashboard() {
       <Sidebar />
       <Layout>
         <Content style={{ maxHeight: "100vh", overflow: "auto" }}>
-          <Outlet />
+          <Flex style={containerStyles} gap="middle" vertical>
+            <Outlet />
+          </Flex>
         </Content>
       </Layout>
+      <ExtractBillDrawer />
     </Layout>
   );
 }
