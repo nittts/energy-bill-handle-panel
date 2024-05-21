@@ -1,0 +1,39 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+* {
+  scrollbar-color: gray transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 4px; /* vertical scrollbar */
+  height: 4px; /* horizontal scrollbar */
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: gray;
+  border-radius: 2em;
+  border: calc(4px / 4) solid transparent;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #d2d2d2;
+}
+
+*::-moz-scrollbar-button:decrement,
+*::-moz-scrollbar-button:increment,
+*::-webkit-scrollbar-button:decrement,
+*::-webkit-scrollbar-button:increment {
+  width: 0px;
+}
