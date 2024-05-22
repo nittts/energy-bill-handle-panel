@@ -15,8 +15,8 @@ function CardDescription(infos: Omit<Bill, 'id'>) {
   const items = [
     { key: "CardDescription_clientNumber", label: "N. cliente", children: clientNumber },
     { key: "CardDescription_referenceMonth", label: "Mês de Referência", children: FormattersUtils.formatDate(referenceMonth) },
-    { key: "CardDescription_energyConsumption", label: "Consumo de Energia Elétrica", children: FormattersUtils.formatNumber(energyConsumption) },
-    { key: "CardDescription_energyReimbursed", label: "Energia Compensada", children: FormattersUtils.formatNumber(energyReimbursed) },
+    { key: "CardDescription_energyConsumption", label: "Consumo de Energia Elétrica", children: FormattersUtils.formatNumber(energyConsumption, 'KwH') },
+    { key: "CardDescription_energyReimbursed", label: "Energia Compensada", children: FormattersUtils.formatNumber(energyReimbursed, 'KwH') },
     { key: "CardDescription_gdTotal", label: "Valor total sem GD", children: FormattersUtils.formatCurrency(gdTotal) },
     { key: "CardDescription_gdEconomy", label: "Economia GD", children: FormattersUtils.formatCurrency(gdEconomy) },    
   ];

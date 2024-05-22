@@ -16,7 +16,7 @@ function LastBillsContainer() {
 
   return (
     <FadeIn>
-      <Card>
+      <Card style={{ overflow: "auto" }}>
         <BillsTable data={bills} />
       </Card>
     </FadeIn>

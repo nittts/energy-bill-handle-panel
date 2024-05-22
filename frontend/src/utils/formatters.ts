@@ -2,7 +2,7 @@ export class FormattersUtils {
   public static formatDate(date: Date | number) {
     const dateFormatter = new Intl.DateTimeFormat("pt-BR", {
       month: "numeric",
-      year: "numeric",
+      year: "2-digit",
       hour12: false,
     });
 
@@ -18,11 +18,11 @@ export class FormattersUtils {
     return amountFormater.format(currency);
   }
 
-  public static formatNumber(number: number | bigint) {
+  public static formatNumber(number: number | bigint, suffix?: string) {
     const numberFormatter = new Intl.NumberFormat("pt-BR", {
       style: "decimal",
     });
 
-    return numberFormatter.format(number);
+    return `${numberFormatter.format(number)} ${suffix ?? ""}`;
   }
 }

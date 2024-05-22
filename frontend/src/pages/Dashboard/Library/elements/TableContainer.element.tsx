@@ -23,7 +23,7 @@ function TableContainer({ onSelect, selected }: TableContainerProps) {
 
   return (
     <FadeIn>
-      <Card>
+      <Card style={{ overflow: "auto" }}>
         <BillsTable selected={selected} onSelect={onSelect} data={bills} />
       </Card>
     </FadeIn>
