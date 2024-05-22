@@ -1,8 +1,9 @@
+import { QueryBillsParams } from "../@types/bills.types";
 import billsModel from "../models/bills.model";
 
 class BillsService {
-  async findAll() {
-    return billsModel.getAll();
+  async findAll(filters: QueryBillsParams) {
+    return billsModel.getAll(filters);
   }
 
   async findByClientId() {

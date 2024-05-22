@@ -1,6 +1,18 @@
+import { Prisma } from "@prisma/client";
+import prisma from "../database/prisma";
+import { QueryBillsParams } from "../@types/bills.types";
+
+const orderBy = { referenceMonth: Prisma.SortOrder.asc };
+
 class BillsModel {
-  async getAll() {
-    return [];
+  model: Prisma.BillDelegate;
+
+  constructor() {
+    this.model = prisma.bill;
+  }
+
+  async getAll(where: QueryBillsParams) {
+    return await this.model.findMany({ where, orderBy });
   }
 
   async findByClientId() {
