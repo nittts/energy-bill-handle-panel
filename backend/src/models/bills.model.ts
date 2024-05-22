@@ -11,7 +11,7 @@ class BillsModel {
     this.model = prisma.bill;
   }
 
-  async getAll(where: QueryBillsParams) {
+  async findAll(where: QueryBillsParams) {
     return await this.model.findMany({ where, orderBy });
   }
 

@@ -9,21 +9,26 @@ datasource db {
 }
 
 model Bill {
-  id                       String @id @unique @default(uuid())
+  id                             String     @id @unique @default(uuid())
+       
+  clientId                       String 
+  installationId                 String
+       
+  energyElectric                 Int
+  energyElectricCost             Int
+  energySceeeWithoutICMS         Int
+  energySceeeWithoutICMSCost     Int
+     
+  energyGD                       Int
+  energyGDCost                   Int
 
-  clientId                 String 
-  installationId           String
-  
-  energyElectric           Int   
-  energySceeeWithoutICMS   Int
-  energyGD                 Int
-  municipalityContribution Int
-  totalCost                Int
-  
-  referenceMonth           DateTime
-  dueDate                  DateTime
-
-  information              BillInformation?
+  municipalityContributionCost   Int
+  totalCost                      Int
+         
+  referenceMonth                 DateTime
+  dueDate                        DateTime
+     
+  information                    BillInformation?
 
   @@index([clientId, referenceMonth, installationId])
   @@map("bill")

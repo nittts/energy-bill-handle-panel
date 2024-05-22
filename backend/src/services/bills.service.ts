@@ -3,7 +3,14 @@ import billsModel from "../models/bills.model";
 
 class BillsService {
   async findAll(filters: QueryBillsParams) {
-    return billsModel.getAll(filters);
+    const bills = await billsModel.findAll(filters);
+
+    const formattedBills = bills.map((bill) => ({
+      clientNumber: bill.clientId,
+      referenceMonth: bill.referenceMonth,
+    }));
+
+    return formattedBills;
   }
 
   async findByClientId() {
