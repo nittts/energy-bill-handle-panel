@@ -11,8 +11,8 @@ datasource db {
 model Bill {
   id                             String     @id @unique @default(uuid())
        
-  clientId                       String 
-  installationId                 String
+  clientNumber                       String 
+  installationNumber                 String
        
   energyElectric                 Int
   energyElectricCost             Int
@@ -20,7 +20,7 @@ model Bill {
   energySceeeWithoutICMSCost     Int
      
   energyGD                       Int
-  energyGDCost                   Int
+  energyGDEconomy                Int
 
   municipalityContributionCost   Int
   totalCost                      Int
@@ -30,7 +30,7 @@ model Bill {
      
   information                    BillInformation?
 
-  @@index([clientId, referenceMonth, installationId])
+  @@index([clientNumber, referenceMonth, installationNumber])
   @@map("bill")
 }
 
