@@ -7,12 +7,12 @@ const routes = (app: Express.Application) => {
     const routeName = path.slice(0, path.indexOf("."));
 
     if (routeName !== "index") {
-      const { default: route } = await import(`./${routeName}`);
+      const { default: route } = await import(`./${path}`);
       const router = route(Router());
 
       router.use(errorHandling);
 
-      app.use(`/api/${routeName}`, router);
+      app.use(`/${routeName}`, router);
     }
   });
 };

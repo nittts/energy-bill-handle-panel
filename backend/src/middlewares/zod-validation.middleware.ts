@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from "express";
 import { ZodError, ZodType } from "zod";
-import { AppError } from "./asyncErrors.middleware";
 
 const constructErrorObject = (error: ZodError) => {
   const errorObject: Record<string, string> = {};
