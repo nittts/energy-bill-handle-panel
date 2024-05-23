@@ -5,4 +5,5 @@ export type ParsedBillCompany = {
   address: string;
   cpfCnpj: string;
   stateSubscription: string;
+  clientNumber: string;
 };

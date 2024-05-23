@@ -1,4 +1,3 @@
-import { DashboardGraphQuery } from "../@types/bills.types";
 import { UploadedFiles } from "../@types/file.types";
 import { AppError } from "../middlewares/asyncErrors.middleware";
 import { queryBillsParams, findById, dashboardGraphQuery } from "../schemas/bill.schemas";

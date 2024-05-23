@@ -11,6 +11,7 @@ datasource db {
 model Company {
   id                String     @id @unique @default(uuid())
 
+  clientNumber      String     @unique
   name              String
   streetAddress     String
   district          String

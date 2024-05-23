@@ -1,4 +1,3 @@
-import { object } from "zod";
 import { dateParse, floatParse, fullDatePrase, intParse } from "./pdfParsersHelper";
 import { ParsedBill } from "../@types/bills.types";
 
@@ -71,6 +70,7 @@ const extractRanges = [
     keys: ["stateSubscription"],
     object: true,
   },
+  { locations: [0], indexes: [42], keys: ["clientNumber"], masterKey: "company", object: true },
 ];
 
 const splitValues = (str: string) => str.split(" ");

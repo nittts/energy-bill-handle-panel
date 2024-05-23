@@ -36,7 +36,7 @@ class BillsModel {
 
       const persistedBill = await prisma.$transaction(async (tx) => {
         const { company, information, billHistory, ...billPayload } = billRest;
-        const persistedCompany = await tx.company.findFirst({ where: { cpfCnpj: bill.company.cpfCnpj } });
+        const persistedCompany = await tx.company.findFirst({ where: { clientNumber: company.clientNumber } });
 
         return tx.bill.create({
           data: {
