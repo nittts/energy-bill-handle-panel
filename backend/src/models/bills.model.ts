@@ -2,7 +2,7 @@ import { Prisma } from "@prisma/client";
 import prisma from "../database/prisma";
 import bucket from "../integrations/firebaseStorage";
 
-import { DashboardGraphQuery, FindById, ParsedBillWithFileInfo, QueryBillsParams } from "../@types/bills.types";
+import { DashboardGraphQuery, FindById, BilWithFileInfo, QueryBillsParams } from "../@types/bills.types";
 
 import { v4 as uuid } from "uuid";
 import { unlinkSync } from "fs";
@@ -16,14 +16,14 @@ const include = {
 
 class BillsModel {
   async findAll(where: QueryBillsParams) {
-    return await prisma.bill.findMany({ where, orderBy, include });
+    return await prisma.bill.findMany({ where, orderBy });
   }
 
   async findByClientId(where: FindById) {
     return await prisma.bill.findUnique({ where, include });
   }
 
-  async bulkCreate(bills: ParsedBillWithFileInfo[]) {
+  async bulkCreate(bills: BilWithFileInfo[]) {
     const persistedBills = [];
 
     for (const bill of bills) {

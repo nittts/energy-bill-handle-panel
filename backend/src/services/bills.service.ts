@@ -1,11 +1,12 @@
-import { Bill } from "@prisma/client";
-import { DashboardGraphQuery, FindById, ParsedBill, QueryBillsParams } from "../@types/bills.types";
+import { Bill, BillWithoutRelations, DashboardGraphQuery, FindById, QueryBillsParams } from "../@types/bills.types";
 import { UploadedFiles } from "../@types/file.types";
 
 import billsModel from "../models/bills.model";
 import pdfParserHelper from "../helpers/pdfParsers.helper";
 import constructBillHelper from "../helpers/constructBill.helper";
 import GenerateDates from "../helpers/generateDates";
+
+import { AppError } from "../middlewares/asyncErrors.middleware";
 class BillsService {
   async findAll(filters: QueryBillsParams) {
     const bills = await billsModel.findAll(filters);
@@ -14,7 +15,11 @@ class BillsService {
   }
 
   async findById(where: FindById) {
-    return billsModel.findByClientId(where);
+    const bill = await billsModel.findByClientId(where);
+
+    if (!bill) throw new AppError("Fatura não encontrada");
+
+    return this.mapBills([bill]);
   }
 
   async uploadBills(files: UploadedFiles) {
@@ -26,7 +31,9 @@ class BillsService {
       pdfInfos.push({ ...constructBillHelper(parsedPdf), filePath: file.path, fileType: file.mimetype });
     }
 
-    return billsModel.bulkCreate(pdfInfos);
+    const uploadedBills = await billsModel.bulkCreate(pdfInfos);
+
+    return this.mapBills(uploadedBills);
   }
 
   async dashboardGraphs(query: DashboardGraphQuery) {
@@ -56,7 +63,7 @@ class BillsService {
     return payload;
   }
 
-  private mapBills(bills: Bill[]) {
+  private mapBills(bills: (Bill | BillWithoutRelations)[]) {
     return bills.map((bill) => {
       const {
         energyElectric,

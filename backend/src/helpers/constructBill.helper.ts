@@ -1,5 +1,5 @@
 import { dateParse, floatParse, fullDatePrase, intParse } from "./pdfParsersHelper";
-import { ParsedBill } from "../@types/bills.types";
+import { Bill } from "../@types/bills.types";
 
 const extractRanges = [
   { locations: [0], indexes: [42], keys: ["clientNumber"] },
@@ -100,7 +100,7 @@ export default function constructBillHelper(pdfTextContent: string[]) {
     return acc;
   };
 
-  const data = extractRanges.reduce(extractRangesFunc, {} as ParsedBill);
+  const data = extractRanges.reduce(extractRangesFunc, {} as Bill);
   const information = pdfTextContent.slice(61).join(" ");
 
   return {

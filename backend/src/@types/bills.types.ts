@@ -1,6 +1,6 @@
 import z from "zod";
 import * as schemas from "../schemas/bill.schemas";
-import { ParsedBillCompany } from "./company.types";
+import { Company } from "./company.types";
 
 export type QueryBillsParams = z.infer<typeof schemas.queryBillsParams>;
 
@@ -15,7 +15,8 @@ export type ParsedBillHistory = {
   days: number;
 };
 
-export type ParsedBill = {
+export type Bill = {
+  id?: string;
   clientNumber: string;
   installationNumber: string;
   energyElectric: number;
@@ -30,11 +31,13 @@ export type ParsedBill = {
   referenceMonth: Date | string;
   dueDate: Date | string;
   emissionDate: Date | string;
-  company: ParsedBillCompany;
+  company: Company;
   information: string;
 };
 
-export type ParsedBillWithFileInfo = ParsedBill & {
+export type BillWithoutRelations = Omit<Bill, "company" | "information" | "billHistory">;
+
+export type BilWithFileInfo = Bill & {
   filePath: string;
   fileType: string;
 };
