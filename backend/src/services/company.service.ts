@@ -1,8 +1,9 @@
+import { QueryCompanyParams } from "../@types/company.types";
 import companyModel from "../models/company.model";
 
 class CompanyService {
-  getCompanies() {
-    return companyModel.getCompanies();
+  getCompanies(query: QueryCompanyParams) {
+    return companyModel.getCompanies(query);
   }
 }
 

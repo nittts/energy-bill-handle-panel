@@ -1,8 +1,9 @@
+import { QueryCompanyParams } from "../@types/company.types";
 import prisma from "../database/prisma";
 
 class CompanyModel {
-  async getCompanies() {
-    return await prisma.company.findMany({});
+  async getCompanies(where: QueryCompanyParams) {
+    return await prisma.company.findMany({ where });
   }
 }
 

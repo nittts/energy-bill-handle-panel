@@ -21,6 +21,7 @@ model Company {
 
   bills             Bill[]
 
+  @@index([clientNumber, cpfCnpj, name])
   @@map("company")
 }
 
