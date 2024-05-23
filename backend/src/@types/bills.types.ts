@@ -6,6 +6,8 @@ export type QueryBillsParams = z.infer<typeof schemas.queryBillsParams>;
 
 export type FindById = z.infer<typeof schemas.findById>;
 
+export type DashboardGraphQuery = z.infer<typeof schemas.dashboardGraphQuery>;
+
 export type ParsedBillHistory = {
   monthYear: Date | string;
   consumption: number;

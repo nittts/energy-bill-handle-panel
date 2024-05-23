@@ -1,9 +1,10 @@
 import { Prisma } from "@prisma/client";
 import prisma from "../database/prisma";
-import { FindById, ParsedBillWithFileInfo, QueryBillsParams } from "../@types/bills.types";
+import bucket from "../integrations/firebaseStorage";
+
+import { DashboardGraphQuery, FindById, ParsedBillWithFileInfo, QueryBillsParams } from "../@types/bills.types";
 
 import { v4 as uuid } from "uuid";
-import bucket from "../integrations/firebaseStorage";
 import { unlinkSync } from "fs";
 
 const orderBy = { referenceMonth: Prisma.SortOrder.asc };
@@ -28,10 +29,8 @@ class BillsModel {
     for (const bill of bills) {
       const { filePath, fileType, ...billRest } = bill;
 
-      const [_, file] = (await bucket.upload(filePath, { gzip: true, contentType: fileType })) as [
-        unknown,
-        { mediaLink: string }
-      ];
+      type integrationResponse = [unknown, { mediaLink: string }];
+      const [_, file] = (await bucket.upload(filePath, { gzip: true, contentType: fileType })) as integrationResponse;
 
       unlinkSync(filePath);
 
@@ -55,6 +54,22 @@ class BillsModel {
     }
 
     return persistedBills;
+  }
+
+  async dashboardFecth(query: DashboardGraphQuery) {
+    const { clientNumber, endDate, startDate } = query;
+    const where = {
+      clientNumber,
+      referenceMonth: {
+        gte: startDate,
+        lte: endDate,
+      },
+    };
+
+    return await prisma.bill.findMany({
+      where,
+      orderBy,
+    });
   }
 }
 

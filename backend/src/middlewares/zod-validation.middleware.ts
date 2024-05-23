@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { ZodError, ZodType } from "zod";
+import { ZodError, ZodType, z } from "zod";
 
 const constructErrorObject = (error: ZodError) => {
   const errorObject: Record<string, string> = {};

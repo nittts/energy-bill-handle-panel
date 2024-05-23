@@ -1,11 +1,13 @@
+import { DashboardGraphQuery } from "../@types/bills.types";
 import { UploadedFiles } from "../@types/file.types";
 import { AppError } from "../middlewares/asyncErrors.middleware";
+import { queryBillsParams, findById, dashboardGraphQuery } from "../schemas/bill.schemas";
 import billsService from "../services/bills.service";
 import { Request, Response } from "express";
 
 class BillsController {
   async index(req: Request, res: Response) {
-    const { query } = req;
+    const query = queryBillsParams.parse(req.query);
 
     const bills = await billsService.findAll(query);
 
@@ -13,9 +15,9 @@ class BillsController {
   }
 
   async getById(req: Request, res: Response) {
-    const { id } = req.params;
+    const params = findById.parse(req.params);
 
-    const bills = await billsService.findById({ id });
+    const bills = await billsService.findById(params);
 
     return res.status(200).send(bills);
   }
@@ -31,7 +33,11 @@ class BillsController {
   }
 
   async dashboardGraphs(req: Request, res: Response) {
-    return billsService.findAll({});
+    const query = dashboardGraphQuery.parse(req.query);
+
+    const graphs = await billsService.dashboardGraphs(query);
+
+    return res.status(200).send(graphs);
   }
 }
 
