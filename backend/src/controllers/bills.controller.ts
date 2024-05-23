@@ -12,8 +12,12 @@ class BillsController {
     return res.status(200).send(bills);
   }
 
-  async getByClientId(req: Request, res: Response) {
-    return billsService.findByClientId();
+  async getById(req: Request, res: Response) {
+    const { id } = req.params;
+
+    const bills = await billsService.findById({ id });
+
+    return res.status(200).send(bills);
   }
 
   async uploadBills(req: Request, res: Response) {

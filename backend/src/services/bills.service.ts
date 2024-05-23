@@ -1,5 +1,5 @@
 import { Bill } from "@prisma/client";
-import { ParsedBill, QueryBillsParams } from "../@types/bills.types";
+import { FindById, ParsedBill, QueryBillsParams } from "../@types/bills.types";
 import { UploadedFiles } from "../@types/file.types";
 
 import billsModel from "../models/bills.model";
@@ -12,8 +12,8 @@ class BillsService {
     return this.mapBills(bills);
   }
 
-  async findByClientId() {
-    return billsModel.findByClientId();
+  async findById(where: FindById) {
+    return billsModel.findByClientId(where);
   }
 
   async uploadBills(files: UploadedFiles) {

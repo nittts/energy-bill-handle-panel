@@ -4,6 +4,8 @@ import { ParsedBillCompany } from "./company.types";
 
 export type QueryBillsParams = z.infer<typeof schemas.queryBillsParams>;
 
+export type FindById = z.infer<typeof schemas.findById>;
+
 export type ParsedBillHistory = {
   monthYear: Date | string;
   consumption: number;
