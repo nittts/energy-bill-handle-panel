@@ -15,7 +15,7 @@ const destinationFiles = (
   file: Express.Multer.File,
   cb: (error: Error | null, destination: string) => void
 ) => {
-  const baseDir = process.env.BASE_UPLOAD_URL || path.resolve(process.env.BASE_UPLOAD_URL || "");
+  const baseDir = process.env.BASE_UPLOAD_URL || path.resolve("./");
 
   const savePath = `${baseDir}/temp`;
 
@@ -43,7 +43,7 @@ const destinationFiles = (
 const filename = (req: Request, file: Express.Multer.File, cb: (error: Error | null, filename: string) => void) => {
   const id = uuid();
 
-  cb(null, `${id}.${file.mimetype}`);
+  cb(null, `${id}.pdf`);
 };
 
 const files = multer.diskStorage({
@@ -54,7 +54,7 @@ const files = multer.diskStorage({
 const filesStorage = multer({ storage: files, limits: { fileSize: maxSize } });
 
 async function fileUpload(req: Request, res: Response, next: NextFunction) {
-  filesStorage.array("files", 20)(req, res, next);
+  filesStorage.array("files[]", 20)(req, res, next);
 }
 
 export default fileUpload;

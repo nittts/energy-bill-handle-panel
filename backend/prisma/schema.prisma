@@ -8,12 +8,28 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Company {
+  id                String     @id @unique @default(uuid())
+
+  name              String
+  streetAddress     String
+  district          String
+  address           String
+  cpfCnpj           String     @unique
+  stateSubscription String
+
+  bills             Bill[]
+
+  @@map("company")
+}
+
 model Bill {
-  id                             String     @id @unique @default(uuid())
-       
-  clientNumber                       String 
-  installationNumber                 String
-       
+  id                             String          @id @unique @default(uuid())
+  
+  companyId                      String
+  clientNumber                   String 
+  installationNumber             String
+
   energyElectric                 Int
   energyElectricCost             Int
   energySceeeWithoutICMS         Int
@@ -27,19 +43,42 @@ model Bill {
          
   referenceMonth                 DateTime
   dueDate                        DateTime
-     
-  information                    BillInformation?
+  emissionDate                   DateTime
+  createdAt                      DateTime         @default(now())
 
-  @@index([clientNumber, referenceMonth, installationNumber])
+  uploadPath                     String
+
+  information                    BillInformation?
+  billHistory                    BillHistory[]
+
+  company                        Company          @relation(fields: [companyId], references: [id])
+
+  @@index([clientNumber, installationNumber, companyId])
+  @@index([referenceMonth, dueDate, emissionDate])
+  @@index([createdAt])
   @@map("bill")
 }
 
 model BillInformation {
-  id     Int    @id @default(autoincrement())
+  id     String @id @unique @default(uuid())
   BillId String @unique
   info   String
 
   bill   Bill   @relation(fields: [BillId], references: [id])
 
   @@map("bill_information")
+}
+
+model BillHistory {
+  id            String     @id @unique @default(uuid())
+  billId        String
+
+  monthYear     DateTime
+  consumption   Int
+  averageDayKwh Float
+  days          Int
+
+  bill          Bill       @relation(fields: [billId], references: [id])
+  
+  @@map("bill_history")
 }

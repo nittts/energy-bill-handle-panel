@@ -8,3 +8,5 @@ node_modules
 # ignore deploy 
 dist
 build
+
+src/log

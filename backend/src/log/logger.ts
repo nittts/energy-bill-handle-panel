@@ -1,7 +1,7 @@
 import path from "path";
 import pino from "pino";
 
-const pathToLog = `${path.resolve(String(process.env.BASE_UPLOAD_URL)) || "./"}/logs`;
+const pathToLog = `${process.env.BASE_UPLOAD_URL || path.resolve("./")}/log`;
 
 const transport = pino.transport({
   targets: [

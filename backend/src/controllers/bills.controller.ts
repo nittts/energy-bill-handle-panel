@@ -1,3 +1,5 @@
+import { UploadedFiles } from "../@types/file.types";
+import { AppError } from "../middlewares/asyncErrors.middleware";
 import billsService from "../services/bills.service";
 import { Request, Response } from "express";
 
@@ -15,7 +17,13 @@ class BillsController {
   }
 
   async uploadBills(req: Request, res: Response) {
-    return billsService.bulkCreate();
+    const { files } = req;
+
+    if (!files && !Array.isArray(files)) throw new AppError("Envie ao menos uma fatura", 400);
+
+    const bills = await billsService.uploadBills(files as UploadedFiles);
+
+    return res.status(201).send(bills);
   }
 
   async dashboardGraphs(req: Request, res: Response) {
