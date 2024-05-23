@@ -5,3 +5,5 @@ export const queryCompanyParams = z.object({
   cpfCnpj: z.string().optional(),
   name: z.string().optional(),
 });
+
+export const findById = z.object({ id: z.string() });
