@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
+
 dayjs.extend(customParseFormat);
 
 export function intParse(value: string) {
@@ -26,11 +27,14 @@ export function dateParse(value: string) {
     JAN: "01",
   };
 
+  let date = value;
   const [month, year] = value.split("/");
 
-  const date = `01/${months[month as keyof typeof months]}/${year}`;
+  if (months[month as keyof typeof months]) {
+    date = `01/${months[month as keyof typeof months]}/${year}`;
+  }
 
-  return dayjs(date, "DD/MM/YY").toISOString();
+  return dayjs(date, ["DD/MM/YY", "DD/MM/YYYY"], true).toISOString();
 }
 
 export function fullDatePrase(value: string) {
