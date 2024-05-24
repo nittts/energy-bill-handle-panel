@@ -33,6 +33,7 @@ export type Bill = {
   emissionDate: Date | string;
   company: Company;
   information: string;
+  uploadPath: string;
 };
 
 export type BillWithoutRelations = Omit<Bill, "company" | "information" | "billHistory">;
@@ -41,3 +42,5 @@ export type BilWithFileInfo = Bill & {
   filePath: string;
   fileType: string;
 };
+
+export type BillsOverload = Bill | BillWithoutRelations;

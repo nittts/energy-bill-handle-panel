@@ -1,4 +1,11 @@
-import { Bill, BillWithoutRelations, DashboardGraphQuery, FindById, QueryBillsParams } from "../@types/bills.types";
+import {
+  Bill,
+  BillWithoutRelations,
+  BillsOverload,
+  DashboardGraphQuery,
+  FindById,
+  QueryBillsParams,
+} from "../@types/bills.types";
 import { UploadedFiles } from "../@types/file.types";
 
 import billsModel from "../models/bills.model";
@@ -19,7 +26,7 @@ class BillsService {
 
     if (!bill) throw new AppError("Fatura não encontrada");
 
-    return this.mapBills([bill]);
+    return this.mapBills(bill);
   }
 
   async uploadBills(files: UploadedFiles) {
@@ -63,20 +70,22 @@ class BillsService {
       categories: [],
     } as { series: { [x: string]: { name: string; data: number[] } }; categories: string[] };
 
-    mappedBills.forEach((bill) => {
-      payload.series.energyConsumption.data.push(bill.energyConsumption);
-      payload.series.energyReimbursed.data.push(bill.energyReimbursed);
-      payload.series.gdTotal.data.push(bill.gdTotal);
-      payload.series.gdEconomy.data.push(Math.abs(bill.gdEconomy));
-    });
+    if (Array.isArray(mappedBills)) {
+      mappedBills.forEach((bill) => {
+        payload.series.energyConsumption.data.push(bill.energyConsumption);
+        payload.series.energyReimbursed.data.push(bill.energyReimbursed);
+        payload.series.gdTotal.data.push(bill.gdTotal);
+        payload.series.gdEconomy.data.push(Math.abs(bill.gdEconomy));
+      });
+    }
 
     payload.categories = GenerateDates(query.startDate, query.endDate);
 
     return payload;
   }
 
-  private mapBills(bills: (Bill | BillWithoutRelations)[]) {
-    return bills.map((bill) => {
+  private mapBills(bills: BillsOverload[] | BillsOverload) {
+    const transform = (bill: BillsOverload) => {
       const {
         energyElectric,
         energySceeeWithoutICMS,
@@ -98,7 +107,13 @@ class BillsService {
         gdTotal,
         gdEconomy: energyGDEconomy,
       };
-    });
+    };
+
+    if (Array.isArray(bills)) {
+      return bills.map((bill) => transform(bill));
+    }
+
+    return transform(bills);
   }
 }
 
