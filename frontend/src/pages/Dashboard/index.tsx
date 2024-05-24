@@ -1,4 +1,4 @@
-import ExtractBillDrawer from "@/components/ExtractBillDrawer";
+import ExtractBillDrawer from "@/components/Drawers/Drawers.extractBill";
 import Sidebar from "@/components/Sidebar";
 
 import { Flex, Layout } from "antd";

@@ -1,4 +1,4 @@
-import { BillGraphs, BillGraphsParams, BillQueryParams } from "@/@types/bill";
+import { BillGraphs, BillGraphsParams, BillQueryParams, BillWithRelations } from "@/@types/bill";
 import { api } from "./api";
 
 const handleParams = (filters?: BillQueryParams) => {
@@ -24,6 +24,12 @@ const getBills = async (filters?: BillQueryParams) => {
   return response.data;
 };
 
+const getBillsById = async ({ id }: { id: string | null }): Promise<BillWithRelations> => {
+  const response = await api.get(`/bills/${id}`);
+
+  return response.data;
+};
+
 const uploadBills = async (formFiles: FormData) => {
   const response = await api.post("/bills/upload", formFiles);
 
@@ -36,4 +42,4 @@ const getBillsGraphs = async (params?: BillGraphsParams): Promise<BillGraphs> =>
   return response.data;
 };
 
-export { getBills, uploadBills, getBillsGraphs };
+export { getBills, uploadBills, getBillsGraphs, getBillsById };

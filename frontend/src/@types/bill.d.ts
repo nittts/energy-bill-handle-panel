@@ -1,12 +1,30 @@
+import { Company } from "./company";
+
 export type Bill = {
   id: string;
-  url: string;
+  uploadPath: string;
   clientNumber: string;
+  createdAt: Date | string;
+  dueDate: Date | string;
+  emissionDate: Date | string;
   referenceMonth: Date;
   energyConsumption: number;
   energyReimbursed: number;
   gdTotal: number;
   gdEconomy: number;
+  information?: { info: string };
+};
+
+export type BillHistory = {
+  monthYear: Date | string;
+  consumption: number;
+  averageDayKwh: number;
+  days: number;
+};
+
+export type BillWithRelations = Bill & {
+  company: Company;
+  billHistory: BillHistory[];
 };
 
 export type BillQueryParams = {

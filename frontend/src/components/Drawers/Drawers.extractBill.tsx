@@ -1,5 +1,5 @@
 import { Drawer, FloatButton, theme } from "antd";
-import ExtractBillForm from "./Forms/Forms.extractBill";
+import ExtractBillForm from "../Forms/Forms.extractBill";
 import { useState } from "react";
 import { MdAdd } from "react-icons/md";
 
@@ -24,7 +24,7 @@ function ExtractBillDrawer() {
         tooltip="Inserir nova fatura"
         shape="square"
         type="primary"
-        icon={<MdAdd size={20} />}
+        icon={<MdAdd size={20} style={{ marginLeft: "-0.2em" }} />}
       />
     </>
   );

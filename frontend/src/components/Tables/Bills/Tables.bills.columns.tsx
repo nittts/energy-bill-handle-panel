@@ -1,6 +1,7 @@
 import { Bill } from "@/@types/bill";
 import { FormattersUtils } from "@/utils/formatters";
 import { Flex, TableProps, Typography } from "antd";
+import ColumnActions from "./Table.bills.columns.actions";
 
 const { Text } = Typography;
 
@@ -48,6 +49,12 @@ const getColumns = (): TableProps<Bill>["columns"] => {
       responsive: ["sm"],
     },
     {
+      title: "Ações",
+      dataIndex: "id",
+      render: (id) => <ColumnActions id={id} />,
+      key: "actions",
+    },
+    {
       title: (
         <Flex vertical gap={2}>
           <Text>Número do Cliente</Text>
@@ -56,6 +63,7 @@ const getColumns = (): TableProps<Bill>["columns"] => {
           <Text>Energia Compensada</Text>
           <Text>Valor total sem GD</Text>
           <Text>Economia GD</Text>
+          <Text>Ações</Text>
         </Flex>
       ),
       render: (_, record) => (
@@ -66,6 +74,9 @@ const getColumns = (): TableProps<Bill>["columns"] => {
           <Text>{`Energia Compensada: ${FormattersUtils.formatNumber(record.energyReimbursed, "KwH")}`}</Text>
           <Text>{`Valor total sem GD: ${FormattersUtils.formatCurrency(record.gdTotal)}`}</Text>
           <Text>{`Economia GD: ${FormattersUtils.formatCurrency(record.gdEconomy)}`}</Text>
+          <Text>
+            <ColumnActions id={record.id} />
+          </Text>
         </Flex>
       ),
       responsive: ["xs"],
