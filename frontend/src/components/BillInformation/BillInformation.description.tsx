@@ -31,7 +31,7 @@ export default function BillInformationDescription({ bill }: { bill: Bill }) {
       { value: energyConsumption, suffix: "kWh", label: "Consumo de energia elétrica (kWh)" },
       { value: energyReimbursed, suffix: "kWh", label: "Energia Compensada (kWh)" },
       { value: gdTotal, suffix: "R$", label: "Valor total sem GD (R$)" },
-      { value: Math.abs(gdEconomy), suffix: "R$", label: "Economia GD (R$)" },
+      { value: gdEconomy, suffix: "R$", label: "Economia GD (R$)" },
     ].map((statistic) => (
       <Col md={24} lg={12}>
         <Card bordered={false}>
