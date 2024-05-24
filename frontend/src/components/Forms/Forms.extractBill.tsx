@@ -1,3 +1,5 @@
+import { useUploadBills } from "@/hooks/bills";
+import { FeedbackUtils } from "@/utils/feedback";
 import { Upload, Typography, Flex, Button, GetProp } from "antd";
 import { RcFile, UploadFile, UploadProps } from "antd/es/upload";
 import { useState } from "react";
@@ -26,6 +28,8 @@ function ExtractBillForm() {
   const [billList, setBillList] = useState<UploadFile[]>([]);
   const [uploading, setUploading] = useState(false);
 
+  const { uploadBills, uploadBillsError } = useUploadBills();
+
   const handleUpload = () => {
     const formData = new FormData();
 
@@ -35,10 +39,15 @@ function ExtractBillForm() {
 
     setUploading(true);
 
-    console.log(formData); // insertUpload
-
-    setUploading(false);
-    setBillList([]);
+    uploadBills(formData)
+      .then(() => {
+        FeedbackUtils.notify({ variant: "success", message: `${billList.length} fatura(s) enviadas com sucesso!` });
+        setUploading(false);
+        setBillList([]);
+      })
+      .catch(() => {
+        FeedbackUtils.notify({ variant: "error", message: uploadBillsError?.message || "Erro ao realizar upload." });
+      });
   };
   const beforeUpload = (_: RcFile, fileList: RcFile[]) => {
     setBillList(fileList);

@@ -9,7 +9,6 @@ function LastBillsContainer() {
 
   const { bills, getBillsStatus } = useGetBills({ clientNumber });
 
-  console.log({ bills });
   return (
     <FadeIn>
       <Card style={{ overflow: "auto" }}>

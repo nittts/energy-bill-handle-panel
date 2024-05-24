@@ -24,4 +24,10 @@ const getBills = async (filters?: BillQueryParams) => {
   return response.data;
 };
 
-export { getBills };
+const uploadBills = async (formFiles: FormData) => {
+  const response = await api.post('/bills/upload', formFiles)
+
+  return response.data
+}
+
+export { getBills, uploadBills };
