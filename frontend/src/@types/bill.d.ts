@@ -8,3 +8,10 @@ export type Bill = {
   gdTotal: number;
   gdEconomy: number;
 };
+
+export type BillQueryParams = {
+  clientNumber?: string;
+  installationNumber?: string;
+  referenceMonth?: Date;
+  dueDate?: Date;
+};

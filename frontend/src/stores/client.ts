@@ -2,24 +2,24 @@ import { create } from "zustand";
 import { LSUtils } from "@/utils/localStorage";
 
 type IClientStore = {
-  clientId: string;
-  updateClientId: (id: string) => void;
+  clientNumber: string;
+  updateClientNumber: (id: string) => void;
 };
 
-const updateLSValue = (clientId: string) => {
-  LSUtils.set(`@ENERGY_BILL_APP::clientID`, clientId);
-  return clientId;
+const updateLSValue = (clientNumber: string) => {
+  LSUtils.set(`@ENERGY_BILL_APP::clientNumber`, clientNumber);
+  return clientNumber;
 };
 
 const useClientStore = create<IClientStore>((set) => ({
-  clientId: LSUtils.get("@ENERGY_BILL_APP::clientID"),
-  updateClientId: (clientId) => set((state) => ({ ...state, clientId: updateLSValue(clientId) })),
+  clientNumber: LSUtils.get("@ENERGY_BILL_APP::clientNumber"),
+  updateClientNumber: (clientNumber) => set((state) => ({ ...state, clientNumber: updateLSValue(clientNumber) })),
 }));
 
 // Methods
-const useUpdateClientId = () => useClientStore(({ updateClientId }) => updateClientId);
+const useUpdateClientNumber = () => useClientStore(({ updateClientNumber }) => updateClientNumber);
 
 // Variables
-const useClientId = () => useClientStore(({ clientId }) => clientId);
+const useClientNumber = () => useClientStore(({ clientNumber }) => clientNumber);
 
-export { useUpdateClientId, useClientId, useClientStore };
+export { useUpdateClientNumber, useClientNumber, useClientStore };

@@ -6,7 +6,7 @@ export class FormattersUtils {
       hour12: false,
     });
 
-    return dateFormatter.format(date);
+    return dateFormatter.format(new Date(date));
   }
 
   public static formatCurrency(currency: number | bigint) {

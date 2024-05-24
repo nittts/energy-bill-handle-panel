@@ -8,7 +8,7 @@ RUN yarn
 
 COPY . . 
 
-ENV BASE_URL="http://api:8080"
+ENV VITE_BACK_END_URL="http://api:3333"
 
 RUN yarn build
 

@@ -1,23 +1,19 @@
 import FadeIn from "@/components/Animations/Animations.FadeIn";
 import BillsTable from "@/components/Tables/Bills";
+import { useGetBills } from "@/hooks/bills";
+import { useClientNumber } from "@/stores/client";
 import { Card } from "antd";
 
 function LastBillsContainer() {
-  const bills = Array.from(new Array(20)).map((_, index) => ({
-    id: `${index}`,
-    url: "asdçasldçlsa",
-    clientNumber: "019231829",
-    referenceMonth: new Date(),
-    energyConsumption: 912098123,
-    energyReimbursed: 912098123,
-    gdTotal: 1209381902,
-    gdEconomy: 1209381902,
-  }));
+  const clientNumber = useClientNumber();
 
+  const { bills, getBillsStatus } = useGetBills({ clientNumber });
+
+  console.log({ bills });
   return (
     <FadeIn>
       <Card style={{ overflow: "auto" }}>
-        <BillsTable data={bills} />
+        <BillsTable data={bills} loading={getBillsStatus === "pending"} />
       </Card>
     </FadeIn>
   );

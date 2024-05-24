@@ -1,18 +1,26 @@
-import { useClientId, useUpdateClientId } from "@/stores/client";
+import { Company } from "@/@types/company";
+import useGetCompanies from "@/hooks/company/getCompanies";
+import { useClientNumber, useUpdateClientNumber } from "@/stores/client";
 import { Button, Dropdown, MenuProps } from "antd";
 
 function SelectClient() {
-  const clientId = useClientId();
-  const updateClientId = useUpdateClientId();
+  const clientNumber = useClientNumber();
+  const updateClientNumber = useUpdateClientNumber();
+  const { companies } = useGetCompanies();
 
-  const items = [{ key: "cliente-1", label: "12389712" }];
-  const onClick: MenuProps["onClick"] = (e) => updateClientId(e.key);
+  const items = companies.map((company: Company) => ({ key: company.clientNumber, label: company.name }));
 
-  const selectedLabel = items.find(({ key }) => key === clientId)?.label;
+  const onClick: MenuProps["onClick"] = (e) => {
+    updateClientNumber(e.key);
+  };
+
+  const selectedLabel = companies.find((company: Company) => company.clientNumber === clientNumber)?.name;
 
   return (
-    <Dropdown menu={{ items, onClick, selectable: true }}>
-      <Button style={{ width: "96%", margin: "2%" }}>{selectedLabel ?? "Selecione o cliente"}</Button>
+    <Dropdown menu={{ items, onClick, selectable: true, selectedKeys: [clientNumber] }}>
+      <Button style={{ width: "96%", margin: "2%", whiteSpace: "normal", height: "auto" }}>
+        {selectedLabel ?? "Selecione o cliente"}
+      </Button>
     </Dropdown>
   );
 }

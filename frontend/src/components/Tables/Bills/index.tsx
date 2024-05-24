@@ -7,9 +7,10 @@ type BillsTableProps = {
   data: Bill[];
   onSelect?: (selectedKeys: Key[]) => void;
   selected?: Key[];
+  loading?: boolean;
 };
 
-function BillsTable({ data, onSelect, selected }: BillsTableProps) {
+function BillsTable({ data, onSelect, selected, loading }: BillsTableProps) {
   const onChange = (keys: Key[]) => {
     if (onSelect) {
       onSelect(keys);
@@ -21,6 +22,7 @@ function BillsTable({ data, onSelect, selected }: BillsTableProps) {
       {...(onSelect && { rowSelection: { type: "checkbox", onChange, selectedRowKeys: selected } })}
       dataSource={data}
       columns={getColumns()}
+      loading={loading}
     />
   );
 }

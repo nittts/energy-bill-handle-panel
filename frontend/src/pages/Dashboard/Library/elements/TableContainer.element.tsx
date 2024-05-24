@@ -1,5 +1,7 @@
 import FadeIn from "@/components/Animations/Animations.FadeIn";
 import BillsTable from "@/components/Tables/Bills";
+import { useGetBills } from "@/hooks/bills";
+import { useClientNumber } from "@/stores/client";
 import { Card } from "antd";
 import { Key } from "react";
 
@@ -9,22 +11,14 @@ type TableContainerProps = {
 };
 
 function TableContainer({ onSelect, selected }: TableContainerProps) {
-  const bills = Array.from(new Array(20)).map((_, index) => ({
-    key: `${index}`,
-    id: `${index}`,
-    url: "asdçasldçlsa",
-    clientNumber: "019231829",
-    referenceMonth: new Date(),
-    energyConsumption: 912098123,
-    energyReimbursed: 912098123,
-    gdTotal: 1209381902,
-    gdEconomy: 12093819021,
-  }));
+  const clientNumber = useClientNumber();
+
+  const { bills, getBillsStatus } = useGetBills({ clientNumber });
 
   return (
     <FadeIn>
       <Card style={{ overflow: "auto" }}>
-        <BillsTable selected={selected} onSelect={onSelect} data={bills} />
+        <BillsTable selected={selected} onSelect={onSelect} data={bills} loading={getBillsStatus === "pending"} />
       </Card>
     </FadeIn>
   );
