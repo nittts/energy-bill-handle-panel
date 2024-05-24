@@ -43,19 +43,31 @@ class BillsService {
 
     const payload = {
       series: {
-        energyConsumption: [],
-        energyReimbursed: [],
-        gdTotal: [],
-        gdEconomy: [],
+        energyConsumption: {
+          name: "Consumo de energia Elétrica kWh",
+          data: [],
+        },
+        energyReimbursed: {
+          name: "Energia Compensada kWh",
+          data: [],
+        },
+        gdTotal: {
+          name: "Valor Total sem GD R$",
+          data: [],
+        },
+        gdEconomy: {
+          name: "Economia GD R$",
+          data: [],
+        },
       },
       categories: [],
-    } as { series: { [x: string]: number[] }; categories: string[] };
+    } as { series: { [x: string]: { name: string; data: number[] } }; categories: string[] };
 
     mappedBills.forEach((bill) => {
-      payload.series.energyConsumption.push(bill.energyConsumption);
-      payload.series.energyReimbursed.push(bill.energyReimbursed);
-      payload.series.gdTotal.push(bill.gdTotal);
-      payload.series.gdEconomy.push(Math.abs(bill.gdEconomy));
+      payload.series.energyConsumption.data.push(bill.energyConsumption);
+      payload.series.energyReimbursed.data.push(bill.energyReimbursed);
+      payload.series.gdTotal.data.push(bill.gdTotal);
+      payload.series.gdEconomy.data.push(Math.abs(bill.gdEconomy));
     });
 
     payload.categories = GenerateDates(query.startDate, query.endDate);
