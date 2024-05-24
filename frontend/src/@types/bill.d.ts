@@ -15,3 +15,24 @@ export type BillQueryParams = {
   referenceMonth?: Date;
   dueDate?: Date;
 };
+
+export type BillGraphsParams = {
+  clientNumber?: string;
+  startDate?: string;
+  endDate?: string;
+};
+
+export type BillGraphs = {
+  series: {
+    energyConsumption: GraphSeries;
+    energyReimbursed: GraphSeries;
+    gdTotal: GraphSeries;
+    gdEconomy: GraphSeries;
+  };
+  categories: string[];
+};
+
+export type GraphSeries = {
+  name: string;
+  data: number[];
+};

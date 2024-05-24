@@ -1,7 +1,7 @@
-import { BillQueryParams } from "@/@types/bill";
+import { BillGraphs, BillGraphsParams, BillQueryParams } from "@/@types/bill";
 import { api } from "./api";
 
-const handleFilters = (filters?: BillQueryParams) => {
+const handleParams = (filters?: BillQueryParams) => {
   const params: Record<string, string | Date | undefined> = {};
 
   if (filters) {
@@ -19,15 +19,21 @@ const handleFilters = (filters?: BillQueryParams) => {
 };
 
 const getBills = async (filters?: BillQueryParams) => {
-  const response = await api.get("/bills", { params: handleFilters(filters) });
+  const response = await api.get("/bills", { params: handleParams(filters) });
 
   return response.data;
 };
 
 const uploadBills = async (formFiles: FormData) => {
-  const response = await api.post('/bills/upload', formFiles)
+  const response = await api.post("/bills/upload", formFiles);
 
-  return response.data
-}
+  return response.data;
+};
 
-export { getBills, uploadBills };
+const getBillsGraphs = async (params?: BillGraphsParams): Promise<BillGraphs> => {
+  const response = await api.get("/bills/graphs", { params: handleParams(params) });
+
+  return response.data;
+};
+
+export { getBills, uploadBills, getBillsGraphs };

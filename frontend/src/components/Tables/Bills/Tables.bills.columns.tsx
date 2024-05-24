@@ -23,14 +23,14 @@ const getColumns = (): TableProps<Bill>["columns"] => {
       title: "Consumo de Energia Elétrica",
       dataIndex: "energyConsumption",
       key: "energyConsumption",
-      render: (energyConsumption) => FormattersUtils.formatNumber(energyConsumption, "KwH"),
+      render: (energyConsumption) => FormattersUtils.formatNumber(energyConsumption, "kWh"),
       responsive: ["sm"],
     },
     {
       title: "Energia Compensada",
       dataIndex: "energyReimbursed",
       key: "energyReimbursed",
-      render: (energyReimbursed) => FormattersUtils.formatNumber(energyReimbursed, "KwH"),
+      render: (energyReimbursed) => FormattersUtils.formatNumber(energyReimbursed, "kWh"),
       responsive: ["sm"],
     },
     {
