@@ -4,7 +4,7 @@ import BillInformationHistory from "./BillInformation.history";
 import BillInformationCompany from "./BillInformation.company";
 import BillInformationDescription from "./BillInformation.description";
 
-export default function BillInformation({ id }: { id: string }) {
+export default function BillInformation({ id }: { id: string | null }) {
   const { bill } = useGetBillsById({ id });
 
   if (!bill) {

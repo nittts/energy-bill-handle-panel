@@ -10,6 +10,7 @@ type BillCardProps = {
   bill: Bill;
   onSelect: (key: Key[]) => void;
   selected: Key[];
+  loading?: boolean;
 };
 
 const { Grid } = Card;
@@ -17,7 +18,7 @@ const { Grid } = Card;
 const descriptionStyle = { width: "100%", padding: "4px" };
 const cardStyle = { width: "100%", minWidth: "25em", maxWidth: "35em", maxHeight: "30em", transition: "0.2 all" };
 
-function BillCard({ bill, onSelect, selected }: BillCardProps) {
+function BillCard({ bill, onSelect, selected, loading }: BillCardProps) {
   const { token } = theme.useToken();
   const { id, ...billInformation } = bill;
 
@@ -35,6 +36,7 @@ function BillCard({ bill, onSelect, selected }: BillCardProps) {
 
   return (
     <Card
+      loading={loading}
       key={id}
       style={{ ...cardStyle, ...injectStyle() }}
       cover={<CardCover onSelect={handleSelect} selected={selected.includes(id)} />}

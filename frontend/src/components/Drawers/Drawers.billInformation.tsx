@@ -1,33 +1,28 @@
 import { Drawer, Flex, theme } from "antd";
 import BillInformation from "../BillInformation";
-import DescriptiveIcon from "../DescriptiveIcon";
-import { useState } from "react";
-import { FaEye } from "react-icons/fa";
+import { useSearchParams } from "react-router-dom";
 
-export default function BillInformationDrawer({ id }: { id: string }) {
-  const [openId, setOpenId] = useState<null | string>(null);
+export default function BillInformationDrawer() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const { token } = theme.useToken();
 
   const handleOpen = () => {
-    if (openId) return setOpenId(null);
-
-    setOpenId(id);
+    setSearchParams({}, { replace: true });
   };
 
   return (
     <>
       <Drawer
         title="Visualização de Fatura"
-        open={!!openId}
+        open={!!searchParams.get("billId")}
         onClose={handleOpen}
         size="large"
         style={{ minHeight: "100vh", background: token.colorBgContainer }}
       >
         <Flex justify="center" style={{ minHeight: "100%" }}>
-          <BillInformation id={id} />
+          <BillInformation id={searchParams.get("billId")} />
         </Flex>
       </Drawer>
-      <DescriptiveIcon title="Mais detalhes" icon={<FaEye size={20} />} onClick={handleOpen} type="link" />
     </>
   );
 }

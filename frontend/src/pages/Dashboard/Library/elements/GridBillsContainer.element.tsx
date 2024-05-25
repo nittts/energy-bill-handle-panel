@@ -2,6 +2,9 @@ import FadeIn from "@/components/Animations/Animations.FadeIn";
 import { Card, Flex } from "antd";
 import BillCard from "@/components/Card";
 import { Key } from "react";
+import { useGetBills } from "@/hooks/bills";
+import { useClientNumber } from "@/stores/client";
+import { Bill } from "@/@types/bill";
 
 type GridContainerProps = {
   onSelect: (selectedKeys: Key[]) => void;
@@ -16,24 +19,21 @@ const style = {
 };
 
 function GridBillsContainer({ onSelect, selected = [] }: GridContainerProps) {
-  const bills = Array.from(new Array(20)).map((_, index) => ({
-    key: `${index}`,
-    id: `${index}`,
-    url: "asdçasldçlsa",
-    clientNumber: "019231829",
-    referenceMonth: new Date(),
-    energyConsumption: 912098123,
-    energyReimbursed: 912098123,
-    gdTotal: 1209381902,
-    gdEconomy: 1209381902,
-  }));
+  const clientNumber = useClientNumber();
+
+  const { bills, getBillsStatus } = useGetBills({ clientNumber });
 
   return (
     <FadeIn>
       <Card>
         <Flex style={style}>
-          {bills.map((bill) => (
-            <BillCard bill={bill} onSelect={onSelect} selected={selected} />
+          {bills.map((bill: Bill) => (
+            <BillCard
+              bill={bill}
+              onSelect={onSelect}
+              selected={selected}
+              loading={getBillsStatus === "pending"}
+            />
           ))}
         </Flex>
       </Card>

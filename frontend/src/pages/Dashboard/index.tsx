@@ -1,3 +1,4 @@
+import BillInformationDrawer from "@/components/Drawers/Drawers.billInformation";
 import ExtractBillDrawer from "@/components/Drawers/Drawers.extractBill";
 import Sidebar from "@/components/Sidebar";
 
@@ -20,6 +21,7 @@ function Dashboard() {
         </Content>
       </Layout>
       <ExtractBillDrawer />
+      <BillInformationDrawer />
     </Layout>
   );
 }

@@ -1,4 +1,4 @@
-import { Flex, Layout, Typography, theme } from "antd";
+import { Flex, Layout, Tag, Typography, theme } from "antd";
 
 import SidebarMenu from "./Sidebar.menu";
 import SidebarSettingsButton from "./Sidebar.settingsButton";
@@ -18,6 +18,7 @@ function Sidebar() {
       style={{
         minHeight: "100vh",
         background: token.colorBgContainer,
+        position: "relative",
       }}
       zeroWidthTriggerStyle={{ background: token.colorPrimary }}
     >
@@ -30,6 +31,13 @@ function Sidebar() {
         <SelectClient />
       </Flex>
       <SidebarMenu />
+      <Flex align="center" justify="center">
+        <Tag>ctrl</Tag>
+        <p style={{ marginRight: 7 }}>+</p>
+        <Tag>shift</Tag>
+        <p style={{ marginRight: 7 }}>+</p>
+        <Tag>F</Tag>
+      </Flex>
     </Sider>
   );
 }

@@ -1,17 +1,18 @@
-import { useNavigate } from "react-router-dom";
-
 import DescriptiveIcon from "@/components/DescriptiveIcon";
 import { MdReadMore } from "react-icons/md";
+import { useSearchParams } from "react-router-dom";
 
 function CardActions(id: string) {
-  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const onClick = (key: "R" | "D") => {
-    console.log(key, id, navigate);
+  const onClick = () => {
+    if (searchParams.get("billId")) return setSearchParams({}, { replace: true });
+
+    setSearchParams({ billId: id }, { replace: true });
   };
 
   const actions = [
-    <DescriptiveIcon type="primary" title="Ver Fatura" icon={<MdReadMore size={20} />} onClick={() => onClick("R")} />,
+    <DescriptiveIcon type="primary" title="Ver Fatura" icon={<MdReadMore size={20} />} onClick={onClick} />,
   ];
 
   return actions;

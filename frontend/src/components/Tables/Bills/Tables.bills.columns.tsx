@@ -53,6 +53,7 @@ const getColumns = (): TableProps<Bill>["columns"] => {
       dataIndex: "id",
       render: (id) => <ColumnActions id={id} />,
       key: "actions",
+      responsive: ["sm"],
     },
     {
       title: (

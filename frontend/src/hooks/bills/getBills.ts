@@ -7,6 +7,7 @@ const useGetBills = (filters?: BillQueryParams) => {
   const { data, status, error } = useQuery({
     queryKey: [BILLS_QUERY_ID, filters],
     queryFn: () => getBills(filters),
+    initialData: [],
   });
 
   return {

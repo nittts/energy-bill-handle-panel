@@ -4,6 +4,8 @@ import { MdGridView, MdList } from "react-icons/md";
 
 import GridBillsContainer from "./elements/GridBillsContainer.element";
 import TableContainer from "./elements/TableContainer.element";
+import { useGetBills } from "@/hooks/bills";
+import { Bill } from "@/@types/bill";
 
 type IViews = "TABLE" | "GRID";
 
@@ -22,17 +24,29 @@ function Library() {
   const [selected, setSelected] = useState<Key[]>([]);
   const [view, setView] = useState<IViews>("TABLE");
 
+  const { bills } = useGetBills();
+
   const onViewChange = (value: IViews) => setView(value);
 
   const onSelect = (keys: Key[]) => {
     setSelected(keys);
   };
 
+  const onExport = () => {
+    const links = bills.reduce((acc, bill: Bill) => {
+      if (selected.includes(bill.id)) acc.push(bill.uploadPath);
+      return acc;
+    }, [] as string[]);
+
+    links.forEach((link) => window.open(link));
+    setSelected([]);
+  };
+
   return (
     <>
       <Flex justify="flex-end" align="center" gap={10}>
         <Segmented<IViews> size="large" options={options} onChange={onViewChange} />
-        <Button type="primary" disabled={!selected.length}>
+        <Button type="primary" disabled={!selected.length} onClick={onExport}>
           Exportar Faturas
         </Button>
       </Flex>
