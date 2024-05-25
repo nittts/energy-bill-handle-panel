@@ -9,10 +9,12 @@ function LastBillsContainer() {
 
   const { bills, getBillsStatus } = useGetBills({ clientNumber });
 
+  if (!bills) return null;
+
   return (
     <FadeIn>
       <Card style={{ overflow: "auto" }}>
-        <BillsTable data={bills} loading={getBillsStatus !== "success"} />
+        <BillsTable data={bills} loading={getBillsStatus === "pending"} />
       </Card>
     </FadeIn>
   );

@@ -15,10 +15,12 @@ function TableContainer({ onSelect, selected }: TableContainerProps) {
 
   const { bills, getBillsStatus } = useGetBills({ clientNumber });
 
+  if (!bills) return null;
+
   return (
     <FadeIn>
       <Card style={{ overflow: "auto" }}>
-        <BillsTable selected={selected} onSelect={onSelect} data={bills} loading={getBillsStatus === "success"} />
+        <BillsTable selected={selected} onSelect={onSelect} data={bills} loading={getBillsStatus === "pending"} />
       </Card>
     </FadeIn>
   );

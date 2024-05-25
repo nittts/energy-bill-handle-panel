@@ -33,7 +33,7 @@ function Library() {
   };
 
   const onExport = () => {
-    const links = bills.reduce((acc, bill: Bill) => {
+    const links = (bills || []).reduce((acc, bill: Bill) => {
       if (selected.includes(bill.id)) acc.push(bill.uploadPath);
       return acc;
     }, [] as string[]);

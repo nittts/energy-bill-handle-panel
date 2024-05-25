@@ -23,12 +23,14 @@ function GridBillsContainer({ onSelect, selected = [] }: GridContainerProps) {
 
   const { bills, getBillsStatus } = useGetBills({ clientNumber });
 
+  if (!bills) return null;
+
   return (
     <FadeIn>
       <Card>
         <Flex style={style}>
           {bills.map((bill: Bill) => (
-            <BillCard bill={bill} onSelect={onSelect} selected={selected} loading={getBillsStatus !== "success"} />
+            <BillCard bill={bill} onSelect={onSelect} selected={selected} loading={getBillsStatus === "pending"} />
           ))}
         </Flex>
       </Card>
