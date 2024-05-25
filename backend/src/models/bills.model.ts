@@ -11,7 +11,7 @@ import {
 } from "../@types/bills.types";
 
 import { v4 as uuid } from "uuid";
-import { unlink } from "fs";
+import { unlink, unlinkSync } from "fs";
 import path from "path";
 
 const orderBy = { referenceMonth: Prisma.SortOrder.asc };
@@ -39,25 +39,25 @@ class BillsModel {
       type integrationResponse = [unknown, { mediaLink: string }];
       const [_, file] = (await bucket.upload(filePath, { gzip: true, contentType: fileType })) as integrationResponse;
 
-      unlink(path.resolve(filePath), async () => {
-        const persistedBill = await prisma.$transaction(async (tx) => {
-          const { company, information, billHistory, ...billPayload } = billRest;
-          const persistedCompany = await tx.company.findFirst({ where: { clientNumber: company.clientNumber } });
+      unlinkSync(path.resolve(filePath));
 
-          return tx.bill.create({
-            data: {
-              ...billPayload,
-              uploadPath: file.mediaLink,
-              company: { connectOrCreate: { create: company, where: { id: persistedCompany?.id ?? uuid() } } },
-              information: { create: { info: information } },
-              billHistory: { createMany: { data: billHistory } },
-            },
-            include,
-          });
+      const persistedBill = await prisma.$transaction(async (tx) => {
+        const { company, information, billHistory, ...billPayload } = billRest;
+        const persistedCompany = await tx.company.findFirst({ where: { clientNumber: company.clientNumber } });
+
+        return tx.bill.create({
+          data: {
+            ...billPayload,
+            uploadPath: file.mediaLink,
+            company: { connectOrCreate: { create: company, where: { id: persistedCompany?.id ?? uuid() } } },
+            information: { create: { info: information } },
+            billHistory: { createMany: { data: billHistory } },
+          },
+          include,
         });
-
-        persistedBills.push(persistedBill);
       });
+
+      persistedBills.push(persistedBill);
     }
 
     return persistedBills;
