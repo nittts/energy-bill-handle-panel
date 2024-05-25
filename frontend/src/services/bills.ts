@@ -44,4 +44,10 @@ const getBillsGraphs = async (params?: BillGraphsParams): Promise<BillGraphs> =>
   return response.data;
 };
 
-export { getBills, uploadBills, getBillsGraphs, getBillsById };
+const deleteBill = async (id: string): Promise<Bill> => {
+  const response = await api.delete(`/bills/${id}`);
+
+  return response.data;
+};
+
+export { getBills, uploadBills, getBillsGraphs, getBillsById, deleteBill };
