@@ -4,7 +4,7 @@ import { getCompanies } from "@/services/company";
 import { useQuery } from "@tanstack/react-query";
 
 const useGetCompanies = (filters?: CompanyQueryParams) => {
-  const { data, status, error } = useQuery({
+  const { data, status, error, refetch } = useQuery({
     queryKey: [COMPANY_QUERY_ID, filters],
     queryFn: () => getCompanies(filters),
     initialData: [],
@@ -14,6 +14,7 @@ const useGetCompanies = (filters?: CompanyQueryParams) => {
     companies: data,
     getCompaniesStatus: status,
     getCompaniesError: error,
+    refetchCompanies: refetch,
   };
 };
 

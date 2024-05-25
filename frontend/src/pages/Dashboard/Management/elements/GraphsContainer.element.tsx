@@ -7,9 +7,9 @@ import FadeIn from "@/components/Animations/Animations.FadeIn";
 import { useGetBillsGraphs } from "@/hooks/bills";
 import { useClientNumber } from "@/stores/client";
 import dayjs from "dayjs";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
-const baseStartDate = dayjs().subtract(1, "year").toISOString();
+const startDate = dayjs().subtract(1, "year").toISOString();
 const endDate = dayjs().toISOString();
 
 type IOptions = {
@@ -18,16 +18,17 @@ type IOptions = {
 };
 
 const options: IOptions[] = [
-  { value: baseStartDate, label: "Último ano" },
+  { value: startDate, label: "Último ano" },
   { value: dayjs().subtract(5, "years").toISOString(), label: "5 anos" },
 ];
 
 function GraphsContainer() {
-  const [startDate, setStartDate] = useState(baseStartDate);
+  const [filters, setFilters] = useState({ endDate, startDate, clientNumber: "" });
+  
   const clientNumber = useClientNumber();
-  const { billGraphs, getBillGraphsStatus } = useGetBillsGraphs({ endDate, startDate, clientNumber });
+  const { billGraphs, getBillGraphsStatus } = useGetBillsGraphs(filters);
 
-  const onViewChange = (value: string) => setStartDate(value);
+  const onViewChange = (value: string) => setFilters({ ...filters, startDate: value });
 
   const { series, categories } = billGraphs;
 
@@ -49,6 +50,10 @@ function GraphsContainer() {
   }, [series, categories]);
 
   const Graphs = () => getBillGraphsStatus === "success" && graphs;
+
+  useEffect(() => {
+    setFilters((prev) => ({ ...prev, clientNumber }));
+  }, [clientNumber]);
 
   return (
     <FadeIn>

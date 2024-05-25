@@ -33,6 +33,8 @@ const getBillsById = async ({ id }: { id: string | null }): Promise<BillWithRela
 const uploadBills = async (formFiles: FormData): Promise<Bill[]> => {
   const response = await api.post("/bills/upload", formFiles);
 
+  console.log(response.data);
+
   return response.data;
 };
 
