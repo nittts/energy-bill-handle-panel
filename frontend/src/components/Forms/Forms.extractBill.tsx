@@ -1,6 +1,4 @@
-import { Bill } from "@/@types/bill";
 import { useGetBillsGraphs, useUploadBills } from "@/hooks/bills";
-import { useUpdateClientNumber } from "@/stores/client";
 import { FeedbackUtils } from "@/utils/feedback";
 import { Upload, Typography, Flex, Button, GetProp } from "antd";
 import { RcFile, UploadFile, UploadProps } from "antd/es/upload";
@@ -42,8 +40,6 @@ function ExtractBillForm() {
   const { uploadBills, uploadBillsError, uploadBillsStatus } = useUploadBills();
   const { invalidateBillGraphs } = useGetBillsGraphs();
 
-  const updateClientNumber = useUpdateClientNumber();
-
   const handleUpload = () => {
     const formData = new FormData();
 
@@ -52,9 +48,9 @@ function ExtractBillForm() {
     });
 
     uploadBills(formData)
-      .then((data: Bill[]) => {
+      .then(() => {
         FeedbackUtils.notify({ variant: "success", message: `${billList.length} fatura(s) enviadas com sucesso!` });
-        updateClientNumber(data[0].clientNumber);
+
         invalidateBillGraphs();
         setBillList([]);
       })
