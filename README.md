@@ -4,7 +4,7 @@ Dashboard criado para gerenciar contas de energia, aplicação desenvolvida para
 
 ## Stack utilizada
 
-**Front-end:** React, Next, Ant Design, React Query, Axios
+**Front-end:** React, React-router-Dom, Ant Design, React Query, Axios, Zustand
 
 **Back-end:** Node, Express
 
