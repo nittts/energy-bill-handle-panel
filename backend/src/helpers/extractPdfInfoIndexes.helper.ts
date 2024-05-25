@@ -18,7 +18,7 @@ export default function extractPdfInfoIndexes(indexes: string[] | number[] | (st
       return [idx + skipOrEndIndex];
     }
 
-    return [indexes.find((index) => index !== -1)];
+    return [indexes.find((index) => index !== -1) ?? 0];
   }
 
   if (typeof directOrFindIndex === "string" && typeof skipOrEndIndex === "undefined") {
