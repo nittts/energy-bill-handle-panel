@@ -7,5 +7,3 @@ app.listen(port, () => {
   console.log(`Server running on 
   http://${host}:${port}!`);
 });
-
-export default app;

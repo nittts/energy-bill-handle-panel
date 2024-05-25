@@ -22,7 +22,7 @@ class BillsService {
   }
 
   async findById(where: FindById) {
-    const bill = await billsModel.findByClientId(where);
+    const bill = await billsModel.findById(where);
 
     if (!bill) throw new AppError("Fatura não encontrada");
 

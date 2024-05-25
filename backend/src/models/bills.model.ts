@@ -23,10 +23,11 @@ const include = {
 
 class BillsModel {
   async findAll(where: QueryBillsParams) {
-    return await prisma.bill.findMany({ where, orderBy });
+    const bills = await prisma.bill.findMany({ where, orderBy });
+    return bills;
   }
 
-  async findByClientId(where: FindById) {
+  async findById(where: FindById) {
     return await prisma.bill.findUnique({ where, include });
   }
 
