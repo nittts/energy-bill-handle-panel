@@ -81,7 +81,17 @@ class BillsModel {
   }
 
   async delete(where: FindById) {
-    return await prisma.bill.delete({ where });
+    return await prisma.$transaction(async (tx) => {
+      const persistedBill = await tx.bill.findFirstOrThrow({ where });
+
+      const startIndex = persistedBill.uploadPath.indexOf("/o/") + 3;
+      const endIndex = persistedBill.uploadPath.indexOf("?");
+      const prefix = persistedBill.uploadPath.slice(startIndex, endIndex);
+
+      bucket.deleteFiles({ prefix });
+
+      return tx.bill.delete({ where });
+    });
   }
 }
 

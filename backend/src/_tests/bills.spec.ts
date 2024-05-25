@@ -81,7 +81,7 @@ describe("[DOMAIN] Bills", () => {
 
   it("[DELETE] /:id, should be able to delete a bill by 'id' | 950153d9-f2e7-4736-a6ce-89fd9fae91c2", async () => {
     prismaMock.bill.findUnique.mockResolvedValue(prismaMockBill);
-    prismaMock.bill.delete.mockResolvedValue(prismaMockBill);
+    prismaMock.$transaction.mockResolvedValue(prismaMockBill);
 
     const res = await request.get("/bills/950153d9-f2e7-4736-a6ce-89fd9fae91c2");
     expect(res.statusCode).toBe(200);

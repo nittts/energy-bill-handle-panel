@@ -43,7 +43,6 @@ class BillsController {
     const params = findById.parse(req.params);
 
     const deletedBill = await billsService.deleteBill(params);
-    console.log(deletedBill);
 
     return res.status(200).send(deletedBill);
   }

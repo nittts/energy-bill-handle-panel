@@ -14,7 +14,7 @@ COPY prisma ./prisma/
 
 COPY . .
 
-EXPOSE 6667
+EXPOSE 5554
 
 RUN yarn build
 
