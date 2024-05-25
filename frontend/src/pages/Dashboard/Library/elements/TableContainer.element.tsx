@@ -18,7 +18,7 @@ function TableContainer({ onSelect, selected }: TableContainerProps) {
   return (
     <FadeIn>
       <Card style={{ overflow: "auto" }}>
-        <BillsTable selected={selected} onSelect={onSelect} data={bills} loading={getBillsStatus === "pending"} />
+        <BillsTable selected={selected} onSelect={onSelect} data={bills} loading={getBillsStatus === "success"} />
       </Card>
     </FadeIn>
   );

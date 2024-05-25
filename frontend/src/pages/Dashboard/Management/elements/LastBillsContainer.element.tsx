@@ -12,7 +12,7 @@ function LastBillsContainer() {
   return (
     <FadeIn>
       <Card style={{ overflow: "auto" }}>
-        <BillsTable data={bills} loading={getBillsStatus === "pending"} />
+        <BillsTable data={bills} loading={getBillsStatus !== "success"} />
       </Card>
     </FadeIn>
   );

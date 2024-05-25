@@ -28,12 +28,7 @@ function GridBillsContainer({ onSelect, selected = [] }: GridContainerProps) {
       <Card>
         <Flex style={style}>
           {bills.map((bill: Bill) => (
-            <BillCard
-              bill={bill}
-              onSelect={onSelect}
-              selected={selected}
-              loading={getBillsStatus === "pending"}
-            />
+            <BillCard bill={bill} onSelect={onSelect} selected={selected} loading={getBillsStatus !== "success"} />
           ))}
         </Flex>
       </Card>
