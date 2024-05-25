@@ -8,6 +8,7 @@ const useBillsGraphs = (filters?: BillGraphsParams) => {
     queryKey: [BILLS_GRAPHS_ID, filters],
     queryFn: () => getBillsGraphs(filters),
     initialData: {} as BillGraphs,
+    enabled: !!filters?.clientNumber,
   });
 
   const invalidateQuery = () => new QueryClient().invalidateQueries({ queryKey: [BILLS_GRAPHS_ID, filters] });
