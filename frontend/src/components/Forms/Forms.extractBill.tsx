@@ -1,8 +1,11 @@
-import { useUploadBills } from "@/hooks/bills";
+import { Bill } from "@/@types/bill";
+import { useGetBillsGraphs, useUploadBills } from "@/hooks/bills";
+import { useUpdateClientNumber } from "@/stores/client";
 import { FeedbackUtils } from "@/utils/feedback";
 import { Upload, Typography, Flex, Button, GetProp } from "antd";
 import { RcFile, UploadFile, UploadProps } from "antd/es/upload";
 import { useState } from "react";
+import { IoMdThumbsUp } from "react-icons/io";
 import { MdInbox } from "react-icons/md";
 
 type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
@@ -10,11 +13,20 @@ type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
 const { Dragger } = Upload;
 const { Text, Title } = Typography;
 
-const DraggerContent = () => (
+const DraggerContent = ({ filesLen }: { filesLen: number }) => (
   <Flex align="center" justify="center" vertical style={{ height: "150px" }}>
-    <MdInbox size={40} />
-    <Text>Clique ou arraste as faturas aqui para enviar</Text>
-    <Text type="secondary">Suporte para uma ou várias faturas.</Text>
+    {filesLen ? (
+      <>
+        <IoMdThumbsUp size={40} color="#87d068" />
+        <Text>{`${filesLen} Faturas selecionadas`}</Text>
+      </>
+    ) : (
+      <>
+        <MdInbox size={40} />
+        <Text>Clique ou arraste as faturas aqui para enviar</Text>
+        <Text type="secondary">Suporte para uma ou várias faturas.</Text>
+      </>
+    )}
   </Flex>
 );
 
@@ -28,6 +40,9 @@ function ExtractBillForm() {
   const [billList, setBillList] = useState<UploadFile[]>([]);
 
   const { uploadBills, uploadBillsError, uploadBillsStatus } = useUploadBills();
+  const { invalidateBillGraphs } = useGetBillsGraphs();
+
+  const updateClientNumber = useUpdateClientNumber();
 
   const handleUpload = () => {
     const formData = new FormData();
@@ -37,8 +52,10 @@ function ExtractBillForm() {
     });
 
     uploadBills(formData)
-      .then(() => {
+      .then((data: Bill[]) => {
         FeedbackUtils.notify({ variant: "success", message: `${billList.length} fatura(s) enviadas com sucesso!` });
+        updateClientNumber(data[0].clientNumber);
+        invalidateBillGraphs();
         setBillList([]);
       })
       .catch(() => {
@@ -82,7 +99,7 @@ function ExtractBillForm() {
         showUploadList
         multiple
       >
-        <DraggerContent />
+        <DraggerContent filesLen={billList.length} />
       </Dragger>
     </Flex>
   );
