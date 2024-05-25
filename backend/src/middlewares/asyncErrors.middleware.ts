@@ -1,4 +1,6 @@
+import { Prisma } from "@prisma/client";
 import { NextFunction, Request, Response } from "express";
+import { log } from "../log/logger";
 
 class AppError extends Error {
   statusCode: number;
@@ -10,13 +12,30 @@ class AppError extends Error {
 }
 
 const errorHandling = (err: Error, req: Request, res: Response, next: NextFunction) => {
-  if (err instanceof AppError) {
-    res.status(err.statusCode).json({ message: err.message, statusCode: err.statusCode });
-  }
+  const getMessage = () => {
+    if (err instanceof AppError) return err.message;
+    if (err instanceof Prisma.PrismaClientKnownRequestError) return `Erro de armazenamento conhecido:  ${err.message}`;
+    if (err instanceof Prisma.PrismaClientUnknownRequestError)
+      return `Erro de armazenamento desconhecido: ${err.message}`;
+    if (err instanceof Prisma.PrismaClientValidationError) return `Erro de validação de armazenamento: ${err.message}`;
 
-  console.log(err)
+    return "Erro de Servidor Interno.";
+  };
 
-  res.status(500).json({ message: "Erro de Servidor Interno.", statusCode: 500 });
+  const getStatus = () => {
+    if (err instanceof AppError) return err.statusCode;
+    if (err instanceof Prisma.PrismaClientKnownRequestError) return 500;
+    if (err instanceof Prisma.PrismaClientUnknownRequestError) return 500;
+    if (err instanceof Prisma.PrismaClientValidationError) return 400;
+
+    return 500;
+  };
+
+  console.error(err);
+
+  log.error(err, getMessage(), getStatus());
+
+  res.status(getStatus()).json({ message: getMessage(), statusCode: getStatus() });
 };
 
 export { AppError, errorHandling };

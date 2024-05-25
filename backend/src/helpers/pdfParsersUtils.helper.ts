@@ -4,12 +4,13 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 dayjs.extend(customParseFormat);
 
 export function intParse(value: string) {
-  value = (value || "").replace(/\./gi, "");
+  value = (value || "0").replace(/\./g, "");
+
   return Math.abs(parseInt(value));
 }
 
 export function floatParse(value: string) {
-  value = (value || "").replace(",", ".");
+  value = (value || "0").replace(".", "").replace(",", ".")
 
   return Math.abs(parseFloat(value));
 }

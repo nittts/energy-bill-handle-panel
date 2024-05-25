@@ -9,9 +9,9 @@ import {
 import { UploadedFiles } from "../@types/file.types";
 
 import billsModel from "../models/bills.model";
-import pdfParserHelper from "../helpers/pdfParsers.helper";
+import pdfParserHelper from "../helpers/pdfParser.helper";
 import constructBillHelper from "../helpers/constructBill.helper";
-import GenerateDates from "../helpers/generateDates";
+import GenerateDates from "../helpers/generateDates.helper";
 
 import { AppError } from "../middlewares/asyncErrors.middleware";
 class BillsService {
