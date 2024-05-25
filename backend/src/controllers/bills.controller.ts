@@ -38,6 +38,15 @@ class BillsController {
 
     return res.status(200).send(graphs);
   }
+
+  async deleteBill(req: Request, res: Response) {
+    const params = findById.parse(req.params);
+
+    const deletedBill = await billsService.deleteBill(params);
+    console.log(deletedBill);
+
+    return res.status(200).send(deletedBill);
+  }
 }
 
 export default new BillsController();

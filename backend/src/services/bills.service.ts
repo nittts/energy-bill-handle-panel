@@ -84,6 +84,12 @@ class BillsService {
     return payload;
   }
 
+  async deleteBill(where: FindById) {
+    const bill = await billsModel.delete(where);
+
+    return this.mapBills(bill);
+  }
+
   private mapBills(bills: BillsOverload[] | BillsOverload) {
     const transform = (bill: BillsOverload) => {
       const {

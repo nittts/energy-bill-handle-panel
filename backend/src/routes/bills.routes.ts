@@ -16,5 +16,7 @@ export default (router: Router) => {
 
   router.post("/upload", fileUpload, billsController.uploadBills);
 
+  router.delete("/:id", ZodValidator(findById, "params"), billsController.deleteBill);
+
   return router;
 };

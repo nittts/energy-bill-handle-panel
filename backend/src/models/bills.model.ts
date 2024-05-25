@@ -79,6 +79,10 @@ class BillsModel {
       orderBy,
     });
   }
+
+  async delete(where: FindById) {
+    return await prisma.bill.delete({ where });
+  }
 }
 
 export default new BillsModel();
