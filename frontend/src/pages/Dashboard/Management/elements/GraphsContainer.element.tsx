@@ -20,7 +20,6 @@ type IOptions = {
 const options: IOptions[] = [
   { value: baseStartDate, label: "Último ano" },
   { value: dayjs().subtract(5, "years").toISOString(), label: "5 anos" },
-  { value: dayjs().subtract(10, "years").toISOString(), label: "10 anos" },
 ];
 
 function GraphsContainer() {

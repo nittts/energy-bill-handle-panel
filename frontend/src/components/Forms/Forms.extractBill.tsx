@@ -26,9 +26,8 @@ const progress = {
 
 function ExtractBillForm() {
   const [billList, setBillList] = useState<UploadFile[]>([]);
-  const [uploading, setUploading] = useState(false);
 
-  const { uploadBills, uploadBillsError } = useUploadBills();
+  const { uploadBills, uploadBillsError, uploadBillsStatus } = useUploadBills();
 
   const handleUpload = () => {
     const formData = new FormData();
@@ -37,15 +36,13 @@ function ExtractBillForm() {
       formData.append("files[]", file as FileType);
     });
 
-    setUploading(true);
-
     uploadBills(formData)
       .then(() => {
         FeedbackUtils.notify({ variant: "success", message: `${billList.length} fatura(s) enviadas com sucesso!` });
-        setUploading(false);
         setBillList([]);
       })
       .catch(() => {
+        console.log(uploadBillsError);
         FeedbackUtils.notify({ variant: "error", message: uploadBillsError?.message || "Erro ao realizar upload." });
       });
   };
@@ -66,8 +63,13 @@ function ExtractBillForm() {
         <Title level={4} style={{ margin: 0 }}>
           Adicionar Faturas
         </Title>
-        <Button type="primary" loading={uploading} disabled={billList.length === 0} onClick={handleUpload}>
-          {uploading ? "Enviando" : "Enviar arquivos"}
+        <Button
+          type="primary"
+          loading={uploadBillsStatus === "pending"}
+          disabled={billList.length === 0}
+          onClick={handleUpload}
+        >
+          {uploadBillsStatus === "pending" ? "Enviando" : "Enviar arquivos"}
         </Button>
       </Flex>
 

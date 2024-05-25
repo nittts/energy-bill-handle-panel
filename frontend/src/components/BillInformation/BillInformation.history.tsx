@@ -4,6 +4,9 @@ import { Collapse } from "antd";
 
 export default function BillInformationHistory({ history }: { history: BillHistory[] }) {
   return (
-    <Collapse items={[{ children: <BillHistoryTable history={history} />, label: "Histórico de consumo" }]}></Collapse>
+    <Collapse
+      items={[{ children: <BillHistoryTable history={history} />, label: "Histórico de consumo" }]}
+      style={{ overflow: "auto" }}
+    />
   );
 }

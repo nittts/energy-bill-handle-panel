@@ -35,7 +35,9 @@ export default {
   xaxis: {
     type: "datetime",
     categories: [""],
-    labels: { datetimeFormatter: { year: "yyyy", month: "MMM yyyy", day: "dd MMM", hour: "HH:mm" } },
+    labels: {
+      datetimeFormatter: { year: "yyyy", month: "MMM yyyy", day: "dd MMM", hour: "HH:mm" },
+    },
   },
   yaxis: {
     show: true,
