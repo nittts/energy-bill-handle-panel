@@ -12,3 +12,6 @@ build
 src/log
 
 temp
+
+log/*
+logs/*

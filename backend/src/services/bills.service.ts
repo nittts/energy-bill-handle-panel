@@ -33,14 +33,15 @@ class BillsService {
     const pdfInfos = [];
 
     for (const file of files) {
-      const parsedPdf = await pdfParserHelper(file.path);
+      const parsedPdf: any = await pdfParserHelper(file.path);
 
       pdfInfos.push({ ...constructBillHelper(parsedPdf), filePath: file.path, fileType: file.mimetype });
     }
 
-    const uploadedBills = await billsModel.bulkCreate(pdfInfos);
+    // const uploadedBills = await billsModel.bulkCreate(pdfInfos);
 
-    return this.mapBills(uploadedBills);
+    // return this.mapBills(uploadedBills);
+    return await constructBillHelper(await pdfParserHelper(files[0].path) as any);
   }
 
   async dashboardGraphs(query: DashboardGraphQuery) {
