@@ -8,10 +8,10 @@ RUN yarn
 
 COPY . . 
 
-ENV VITE_BACK_END_URL="http://api:3333"
+ENV VITE_BACK_END_URL="http://localhost:5553"
 
 RUN yarn build
 
-EXPOSE 5555
+EXPOSE 5553
 
 CMD ["yarn", "start"]

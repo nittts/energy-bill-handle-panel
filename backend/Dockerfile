@@ -14,7 +14,9 @@ COPY prisma ./prisma/
 
 COPY . .
 
-EXPOSE 5554
+ENV PORT 5553
+
+EXPOSE 5553
 
 RUN yarn build
 

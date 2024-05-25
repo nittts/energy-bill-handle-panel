@@ -7,7 +7,7 @@ services:
     links:
       - api
     ports:
-      - 6665:6665
+      - 5555:5555
     networks:
       - network-energy-bill-panel
 
@@ -16,7 +16,7 @@ services:
     image: postgres:latest
     hostname: postgres
     ports:
-      - 6666:5432
+      - 5554:5432
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -34,7 +34,7 @@ services:
     depends_on:
       - postgres
     ports:
-      - 6667:6667
+      - 5553:5553
     env_file:
       - ./backend/docker.env
     networks:
