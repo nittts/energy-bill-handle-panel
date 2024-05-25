@@ -10,6 +10,8 @@ Dashboard criado para gerenciar contas de energia, aplicação desenvolvida para
 
 **Banco de Dados** Postgres, PrismaORM
 
+**Deploy** Vercel, Render, Google Firebase Cloud Bucket Storage
+
 ## Rodando localmente
 
 Clone o projeto
