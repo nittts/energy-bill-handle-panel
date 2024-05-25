@@ -7,7 +7,7 @@ export default defineConfig({
   base: "/",
   plugins: [tsconfigPaths(), react()],
   preview: {
-    port: 5555,
+    port: 6667,
     host: true,
   },
   server: {
@@ -17,6 +17,6 @@ export default defineConfig({
     origin: "0.0.0.0",
     host: true,
     strictPort: true,
-    port: 5555,
+    port: 6667,
   },
 });

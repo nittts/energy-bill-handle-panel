@@ -12,6 +12,6 @@ ENV VITE_BACK_END_URL="http://api:3333"
 
 RUN yarn build
 
-EXPOSE 5555
+EXPOSE 6665
 
 CMD ["yarn", "start"]
