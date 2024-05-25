@@ -16,15 +16,13 @@
   },
   "scripts": {
     "dev": "ts-node-dev src/index.ts --watch",
-    "build": "rimraf dist && tsc --build",
+    "build": "tsc --build",
     "ts.check": "tsc --project tsconfig.json",
-    "add-build": "git add dist",
     "start": "node ./build/index.js"
   },
   "pre-commit": [
     "ts.check",
-    "build",
-    "add-build"
+    "build"
   ],
   "dependencies": {
     "@prisma/client": "5.14.0",
