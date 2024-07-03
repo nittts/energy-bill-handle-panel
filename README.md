@@ -1,6 +1,6 @@
 # Lumi Energy Bill handle Panel
 
-Dashboard criado para gerenciar contas de energia, aplicação desenvolvida para teste técnico da Lumi.
+Dashboard criado para gerenciar contas de energia.
 
 ## Stack utilizada
 
